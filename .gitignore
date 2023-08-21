@@ -1,9 +1,20 @@
+.idea
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+
+/dataSources.local.xml
+
 # gitignore virtualenv
 /storage
 /Lib
 /Scripts
 pyvenv.cfg
-.idea
+
 .env
 # kaggle Data보관- Food Recipes(https://www.kaggle.com/datasets/crispen5gar/recipes3k?select=recipes.json)
 /data
