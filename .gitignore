@@ -10,7 +10,6 @@
 /dataSources.local.xml
 
 # gitignore virtualenv
-/storage
 /Lib
 /Scripts
 pyvenv.cfg
@@ -18,4 +17,5 @@ pyvenv.cfg
 .env
 # kaggle Data보관- Food Recipes(https://www.kaggle.com/datasets/crispen5gar/recipes3k?select=recipes.json)
 /data
+/storage
 /include
