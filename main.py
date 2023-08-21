@@ -33,10 +33,10 @@ service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor,promp
 
 # 아래 두 줄은 한번 vectorstore(.storage)폴더에 저장 되고 나면 다시 실행할 필요 X => 추가 비용 발생 문제 생길 수 있음
 # 단순 벡터 인덱스 생성
-index = GPTVectorStoreIndex.from_documents(documents, service_context=service_context)
-
-#기본적으로, 데이터는 메모리에 저장됩니다. 디스크에 저장하려면 (./storage)등과 같이 지정 해줘야 함
-index.storage_context.persist("./storage")
+# index = GPTVectorStoreIndex.from_documents(documents, service_context=service_context)
+#
+# #기본적으로, 데이터는 메모리에 저장됩니다. 디스크에 저장하려면 (./storage)등과 같이 지정 해줘야 함
+# index.storage_context.persist("./storage")
 
 # 저장 컨텍스트 다시 구성
 storage_context = StorageContext.from_defaults(persist_dir='./storage')
