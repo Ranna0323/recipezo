@@ -21,4 +21,6 @@ import recipezo_app.views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", recipezo_app.views.home, name="home"),
+    path('post/', recipezo_app.views.post_view, name="post"),
+    path('parameter/', recipezo_app.views.get_post, name="parameter"),
 ]
