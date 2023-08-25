@@ -5,11 +5,32 @@
     <title>Title</title>
 </head>
 <body>
-    <!--    GET    -->
-    {{ data }}<br />
     <!--    POST     -->
-    ingredient = {{ ingredient }}<br >
-    recommended menu = {{ response }}<br >
-<a href="{% url 'post' %}">post</a>
+<!--    <p>{{res}}</p>-->
+    <h3>recommended menu1</h3>
+    <p>{{ menu1}}</p>
+    <h3>ingredients1</h3>
+    {% for ingre1 in ingredient1 %}
+        <p>{{ ingre1 }}</p>
+    {% endfor %}
+    <h3>Recipe1</h3>
+    {% for step1 in steps1 %}
+        <p>{{ step1 }}</p>
+    {% endfor %}
+    <h3>recommended menu2</h3>
+    <p>{{ menu2 }}</p>
+    <h3>ingredients2</h3>
+    {% for ingre2 in ingredient2 %}
+        <p>{{ ingre2 }}</p>
+    {% endfor %}
+    <h3>Recipe2</h3>
+    {% for step2 in steps2 %}
+        <p>{{ step2 }}</p>
+    {% endfor %}
+    <a href="{% url 'post' %}">post</a>
 </body>
 </html>
+
+<script>
+
+</script>
