@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from dotenv import load_dotenv
 import os
+import requests
 
 # .env 파일 로드
 load_dotenv()
@@ -25,10 +26,10 @@ index = None
 # 인덱스 초기화
 def initialise_index():
     global index
-    JSONReader = download_loader("JSONReader")
-    loader = JSONReader()
-    documents = loader.load_data(Path('./data/recipes.json'))
-    print(f"Loaded {len(documents)} docs")
+    # JSONReader = download_loader("JSONReader")
+    # loader = JSONReader()
+    # documents = loader.load_data(Path('./data/recipes.json'))
+    # print(f"Loaded {len(documents)} docs")
 
     llm_predictor = LLMPredictor(llm=ChatOpenAI(temperature=0, model_name='gpt-3.5-turbo'))
 
@@ -63,35 +64,78 @@ def home(request):
 def post_view(request):
     return render(request, 'post.html')
 
-def get_post(request):
-    if request.method == 'GET':
-        ingredient = request.GET['ingredient']
-        data = {
-            'data': ingredient,
-        }
-        return render(request, 'parameter.html', data)
 
-    elif request.method == 'POST':
+def get_post(request: requests.models.Response) -> str:
+    if request.method == 'POST':
         ingredient = request.POST['ingredient']
         data = {
             'ingredient': ingredient,
         }
 
-        # print(type(data))
         print(data["ingredient"])
 
         global index
 
+        # Langchain 사용 -
+        from llama_index.output_parsers import LangchainOutputParser
+        from llama_index.prompts.prompts import QuestionAnswerPrompt, RefinePrompt
+        from llama_index.prompts.default_prompts import DEFAULT_TEXT_QA_PROMPT_TMPL, DEFAULT_REFINE_PROMPT_TMPL
+        from langchain.output_parsers import StructuredOutputParser, ResponseSchema
+
+        # define output schema
+        response_schemas = [
+            ResponseSchema(name="number", description="recommend 2 menu number"),
+            ResponseSchema(name="name", description="recommend 2 menu"),
+            ResponseSchema(name="ingredients", description="recommend 2 menu's ingredients"),
+            ResponseSchema(name="steps", description="recommend 2 menu's steps")
+        ]
+
+        # define output parser
+        lc_output_parser = StructuredOutputParser.from_response_schemas(response_schemas)
+        output_parser = LangchainOutputParser(lc_output_parser)
+
+        # format each prompt with output parser instructions
+        fmt_qa_tmpl = output_parser.format(DEFAULT_TEXT_QA_PROMPT_TMPL)
+        fmt_refine_tmpl = output_parser.format(DEFAULT_REFINE_PROMPT_TMPL)
+        qa_prompt = QuestionAnswerPrompt(fmt_qa_tmpl, output_parser=output_parser)
+        refine_prompt = RefinePrompt(fmt_refine_tmpl, output_parser=output_parser)
+
         # 검색 쿼리
-        query_engine = index.as_query_engine()
+        query_engine = index.as_query_engine(
+            text_qa_template=qa_prompt,
+            refine_template=refine_prompt
+        )
 
         question = '''
-        The ingredients in my fridge are''' + data["ingredient"] + '''. What name can you create for food?
-        Give me 3 results.
-        The output format is "number : ". Don't print another sentence after you generate it.
+        You are a culinary expert who can recommend a menu. You can recommend 2 menu based on the 5 options below.
+        1 - Find menus from the index.
+        2 - The ingredients entered from the user are ''' + data["ingredient"] + '''.
+        3 - The menu you recommend must use at least two ingredients from the user's input ingredients.
+        4 - In addition to the input ingredients, all ingredients used in each step must be represented as results.
+        5 - If only one of the ingredients from the user's input is used, your response is "No menu to recommend".
+        6 - Provide your response type as a JSON object with the following schema:
+            {"menus: [{"number": "string","name": "string","ingredients": "", "", ...,steps: "", "", ...},
+            {"number": "string","name": "string","ingredients": "", "", ...,steps: "", "", ...}]}
         '''
         response = query_engine.query(f"{question}")
-
         print(response)
 
-        return render(request, 'parameter.html', {'response': str(response), 'ingredient': data["ingredient"]})
+        # response Data 가공
+        dict = str(response).replace('```json', '').replace("\n", '').replace('```', '').replace('\t', '')
+
+        # str을 dict형태로 바꾸기
+        from ast import literal_eval
+        res = literal_eval(dict)
+
+        print(res)
+
+        final_object = {
+            'menu1': res['menus'][0]['name'],
+            'ingredient1': res['menus'][0]['ingredients'],
+            'steps1': res['menus'][0]['steps'],
+            'menu2': res['menus'][1]['name'],
+            'ingredient2': res['menus'][1]['ingredients'],
+            'steps2': res['menus'][1]['steps'],
+        }
+
+        return render(request, 'parameter.html', final_object)
