@@ -20,11 +20,12 @@ from pathlib import Path
 from llama_index import LLMPredictor, PromptHelper, ServiceContext
 from langchain.chat_models import ChatOpenAI
 
-
 index = None
 
 # 인덱스 초기화
+import time
 def initialise_index():
+    start = time.time()
     global index
     JSONReader = download_loader("JSONReader")
     loader = JSONReader()
@@ -40,11 +41,9 @@ def initialise_index():
     max_chuck_overlap = 0.1
     promt_helper = PromptHelper(max_input_size, num_output, max_chuck_overlap)
 
-    # service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor, prompt_helper=promt_helper)
 
-    # import
-    from llama_index import VectorStoreIndex
     # chroma db
+    from llama_index import VectorStoreIndex
     from llama_index.vector_stores import ChromaVectorStore
     from llama_index.embeddings import OpenAIEmbedding
 
@@ -54,16 +53,20 @@ def initialise_index():
     embed_model = OpenAIEmbedding()
 
     # save to disk
+
+    service_context = ServiceContext.from_defaults(embed_model=embed_model, llm_predictor=llm_predictor, prompt_helper=promt_helper)
     # db = chromadb.PersistentClient(path="./chroma_db")
     # chroma_collection = db.get_or_create_collection("recipe_data")
     # vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
     # storage_context = StorageContext.from_defaults(vector_store=vector_store)
-    service_context = ServiceContext.from_defaults(embed_model=embed_model, llm_predictor=llm_predictor, prompt_helper=promt_helper)
     # index = VectorStoreIndex.from_documents(
     #     documents, storage_context=storage_context, service_context=service_context
     # )
 
+
+
     # load from disk
+
     db2 = chromadb.PersistentClient(path="./chroma_db")
     chroma_collection = db2.get_or_create_collection("recipe_data")
     vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
@@ -71,6 +74,8 @@ def initialise_index():
         vector_store,
         service_context=service_context,
     )
+    end = time.time()
+    print(f"Init {end - start:.5f} sec")
 
 initialise_index()
 
@@ -138,10 +143,11 @@ def get_post(request: requests.models.Response) -> str:
 
         # 검색 쿼리
         query_engine = index.as_query_engine(
+            streaming=True,
             text_qa_temjlate=qa_prompt,
             refine_template=refine_prompt
         )
-
+        start = time.time()
         question = '''
         You are a culinary expert who can recommend a menu. You can recommend 2 menu based on the 5 options below.
         1 - Find menus from the index.
@@ -154,16 +160,25 @@ def get_post(request: requests.models.Response) -> str:
             {"number": "string","name": "string","ingredients": "", "", ...,steps: "", "", ...}]}
         '''
         response = query_engine.query(f"{question}")
-        print(response)
+        # print(response)
+        end = time.time()
+        print(f"query engine {end - start:.5f} sec")
 
-        # response Data 가공
-        # dict = str(response).replace('```json', '').replace("\n", '').replace('```', '').replace('\t', '')
+        import logging
+        import sys
+
+        start2 = time.time()
+        logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+        logging.getLogger().addHandler(logging.StreamHandler(stream=sys.stdout))
+
+        print(response.print_response_stream())
+
+        end2 = time.time()
+        print(f"response {end2 - start2:.5f} sec")
 
         # str을 dict형태로 바꾸기
         from ast import literal_eval
         res = literal_eval(str(response))
-
-        print(type(res),res)
 
         final_object = {
             'menu1': res['menus'][0]['name'],
