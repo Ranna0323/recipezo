@@ -63,10 +63,7 @@ def initialise_index():
     #     documents, storage_context=storage_context, service_context=service_context
     # )
 
-
-
     # load from disk
-
     db2 = chromadb.PersistentClient(path="./chroma_db")
     chroma_collection = db2.get_or_create_collection("recipe_data")
     vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
@@ -119,11 +116,11 @@ def get_post(request: requests.models.Response) -> str:
 
         <prompt>
 
-        Query string here.
+        answer the following questions.
 
         @xml_prefix_prompt
 
-        {output_schema}
+        {{output_schema}}
 
         @json_suffix_prompt_v2_wo_none
         </prompt>
@@ -152,10 +149,10 @@ def get_post(request: requests.models.Response) -> str:
         1 - Find menus from the index.
         2 - The ingredients entered from the user are ''' + data["ingredient"] + '''.
         3 - The menu you recommend must use at least two ingredients from the user's input ingredients.
-        4 - In addition to the input ingredients, all ingredients used in each step must be represented as results.
+        4 - In addition to the user's input ingredients, all ingredients used in each steps must be represented as results.
         5 - If only one of the ingredients from the user's input is used, your response is "No menu to recommend".
         6 - Provide your response type as a JSON object with the following schema:
-            {"menus : [{"number": "string","name": "string","ingredients": "", "", ...,steps: "", "", ...},
+            {"menus : [{"number": "string","name": "string", "ingredients": "", "", ...,steps: "", "", ...},
             {"number": "string","name": "string","ingredients": "", "", ...,steps: "", "", ...}]}
         '''
         response = query_engine.query(f"{question}")
