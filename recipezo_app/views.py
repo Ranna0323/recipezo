@@ -87,7 +87,6 @@ def home(request):
 def post_view(request):
     return render(request, 'post.html')
 
-
 def get_post(request: requests.models.Response) -> str:
     if request.method == 'POST':
         ingredient = request.POST['ingredient']

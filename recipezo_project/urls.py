@@ -23,5 +23,5 @@ urlpatterns = [
     path("home", recipezo_app.views.home, name="home"),
     path('', recipezo_app.views.post_view, name="post"),
     path('parameter/', recipezo_app.views.get_post, name="parameter"),
-    path('menu1', recipezo_app.views.menu1, name="menu1"),
+    # path('menu1', recipezo_app.views.menu1, name="menu1"),
 ]
