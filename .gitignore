@@ -18,4 +18,6 @@ pyvenv.cfg
 # kaggle Data보관- Food Recipes(https://www.kaggle.com/datasets/crispen5gar/recipes3k?select=recipes.json)
 /data
 /storage
+/storage2
 /include
+/chroma_db

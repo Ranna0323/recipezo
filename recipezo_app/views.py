@@ -29,7 +29,7 @@ def initialise_index():
     global index
     JSONReader = download_loader("JSONReader")
     loader = JSONReader()
-    documents = loader.load_data(Path('./data/recipes.json'))
+    documents = loader.load_data(Path('./data/test.json'))
     print(f"Loaded {len(documents)} docs")
 
     llm_predictor = LLMPredictor(llm=ChatOpenAI(temperature=0, model_name='gpt-3.5-turbo'))
@@ -43,7 +43,7 @@ def initialise_index():
 
 
     # chroma db
-    from llama_index import VectorStoreIndex
+    from llama_index import VectorStoreIndex, StorageContext
     from llama_index.vector_stores import ChromaVectorStore
     from llama_index.embeddings import OpenAIEmbedding
 
@@ -55,7 +55,7 @@ def initialise_index():
     # save to disk
 
     service_context = ServiceContext.from_defaults(embed_model=embed_model, llm_predictor=llm_predictor, prompt_helper=promt_helper)
-    # db = chromadb.PersistentClient(path="./chroma_db")
+    # db = chromadb.PersistentClient(path="./chroma_db2")
     # chroma_collection = db.get_or_create_collection("recipe_data")
     # vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
     # storage_context = StorageContext.from_defaults(vector_store=vector_store)
@@ -64,7 +64,7 @@ def initialise_index():
     # )
 
     # load from disk
-    db2 = chromadb.PersistentClient(path="./chroma_db")
+    db2 = chromadb.PersistentClient(path="./chroma_db2")
     chroma_collection = db2.get_or_create_collection("recipe_data")
     vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
     index = VectorStoreIndex.from_vector_store(
@@ -87,11 +87,14 @@ def post_view(request):
 def get_post(request: requests.models.Response) -> str:
     if request.method == 'POST':
         ingredient = request.POST['ingredient']
+        taste = request.POST['taste']
         data = {
             'ingredient': ingredient,
+            'taste': taste
         }
 
         print(data["ingredient"])
+        print(data["taste"])
 
         global index
 
@@ -104,7 +107,7 @@ def get_post(request: requests.models.Response) -> str:
         <rail version="0.1">
 
         <output>
-            <list name="menus" description="You can recommend 2 menu based on the question.">
+            <list name="menus" description="You are a culinary expert who can recommend a menu. You can find 2 menu based on the question.">
                 <object>
                     <string name="number" format="one-line" on-fail-one-line="noop"/>
                     <string name="name" format="one-line" on-fail-one-line="noop"/>
@@ -144,17 +147,19 @@ def get_post(request: requests.models.Response) -> str:
             refine_template=refine_prompt
         )
         start = time.time()
+        # 프롬프트 패턴 - 레시피 패턴
         question = '''
-        You are a culinary expert who can recommend a menu. You can recommend 2 menu based on the 5 options below.
-        1 - Find menus from the index.
-        2 - The ingredients entered from the user are ''' + data["ingredient"] + '''.
-        3 - The menu you recommend must use at least two ingredients from the user's input ingredients.
-        4 - In addition to the user's input ingredients, all ingredients used in each steps must be represented as results.
-        5 - If only one of the ingredients from the user's input is used, your response is "No menu to recommend".
+        You can recommend 2 menu based on the 6 options below.
+        1 - The categories entered by the user is ''' + data["taste"] + '''.
+        2 - The ingredients entered by the user are ''' + data["ingredient"] + '''.
+        3 - Which recipes must matches both the category provided by the user and ingredients provided by the user?
+        4 - The menu you recommend must use at least two ingredients from the user's input ingredients.
+        5 - In addition to the user's input 2 ingredients, all ingredients used in each steps must be represented as results.
         6 - Provide your response type as a JSON object with the following schema:
-            {"menus : [{"number": "string","name": "string", "ingredients": "", "", ...,steps: "", "", ...},
-            {"number": "string","name": "string","ingredients": "", "", ...,steps: "", "", ...}]}
+            {"menus :[{"number": "string", "name": "string", "ingredients": ["", "", ...], "steps": ["", "", ...]},
+            {"number": "string", "name": "string", "ingredients": ["", "", ...], "steps": ["", "", ...]}]}
         '''
+
         response = query_engine.query(f"{question}")
         # print(response)
         end = time.time()
@@ -163,19 +168,22 @@ def get_post(request: requests.models.Response) -> str:
         import logging
         import sys
 
-        start2 = time.time()
+        # start2 = time.time()
         logging.basicConfig(stream=sys.stdout, level=logging.INFO)
         logging.getLogger().addHandler(logging.StreamHandler(stream=sys.stdout))
 
         print(response.print_response_stream())
 
-        end2 = time.time()
-        print(f"response {end2 - start2:.5f} sec")
+        # end2 = time.time()
+        # print(f"response {end2 - start2:.5f} sec")
+        # print(response)
 
         # str을 dict형태로 바꾸기
         from ast import literal_eval
         res = literal_eval(str(response))
 
+        print(res)
+        #
         final_object = {
             'menu1': res['menus'][0]['name'],
             'ingredient1': res['menus'][0]['ingredients'],
@@ -184,5 +192,6 @@ def get_post(request: requests.models.Response) -> str:
             'ingredient2': res['menus'][1]['ingredients'],
             'steps2': res['menus'][1]['steps'],
         }
-
+        #
         return render(request, 'parameter.html', final_object)
+        # return render(request, 'menu1.html', {"response": str(response)})

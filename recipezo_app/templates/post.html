@@ -9,6 +9,8 @@
 <body>
     <form id="contents" name="contents" method="post" action="{% url 'parameter' %}" class="pt-4">
         {% csrf_token %}
+        <span class="m-3">taste : </span>
+        <input name="taste" type="text">
         <span class="m-3">ingredient : </span>
         <input name="ingredient" type="text">
         <input type="submit" value="send" id="do-call">
