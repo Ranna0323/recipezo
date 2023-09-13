@@ -20,4 +20,4 @@ pyvenv.cfg
 /storage
 /storage2
 /include
-/chroma_db
+#/chroma_db
