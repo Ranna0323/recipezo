@@ -57,11 +57,11 @@ def init():
 
     # save to disk
     service_context = ServiceContext.from_defaults(embed_model=embed_model, llm_predictor=llm_predictor,prompt_helper=promt_helper)
-    db = chromadb.PersistentClient(path="./chroma_db")
-    chroma_collection = db.get_or_create_collection("recipe_data")
-    vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
-    storage_context = StorageContext.from_defaults(vector_store=vector_store)
-    index = VectorStoreIndex(nodes, storage_context=storage_context, service_context=service_context)
+    # db = chromadb.PersistentClient(path="./chroma_db")
+    # chroma_collection = db.get_or_create_collection("recipe_data")
+    # vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
+    # storage_context = StorageContext.from_defaults(vector_store=vector_store)
+    # index = VectorStoreIndex(nodes, storage_context=storage_context, service_context=service_context)
 
     # load from disk
     db2 = chromadb.PersistentClient(path="./chroma_db")
@@ -100,7 +100,37 @@ def get_post(request: requests.models.Response) -> str:
         The menus you recommend must matches at least two ingredients from user's input ingredients.
         In addition to the user's input ingredients, all ingredients used in each steps must be represented as results.
         Your response type as a JSON object with the following schema:
-            {"menus :[{"number": "string", "name": "string", "ingredients": ["", "", ...], "steps": ["", "", ...]}]}
+            {"menus :[{
+                {
+                  "number": "string",
+                  "image": "url",
+                  "name": "string",
+                  "description": "string",
+                  "category": "string",
+                  "rattings": "string",
+                  "ingredients": [
+                    "",
+                    "",
+                    ...
+                  ],
+                  "steps": [
+                    "",
+                    "",
+                    ...
+                  ],
+                  "nutrients": [
+                    "",
+                    "",
+                    ...
+                  ],
+                  "times": [
+                    {
+                      "Preparation": "string",
+                      "Cooking": "string"
+                    }
+                  ]
+                }
+            }]}
         You can recommend 2 menu.
         '''
 
@@ -112,14 +142,19 @@ def get_post(request: requests.models.Response) -> str:
         res = literal_eval(str(response))
 
         # print(res)
+        # print(res['menus'][0]['image'])
         #
         final_object = {
             'menu1': res['menus'][0]['name'],
+            'image1': res['menus'][0]['image'],
             'ingredient1': res['menus'][0]['ingredients'],
             'steps1': res['menus'][0]['steps'],
+            'nutrients1': res['menus'][0]['nutrients'],
             'menu2': res['menus'][1]['name'],
+            'image2': res['menus'][1]['image'],
             'ingredient2': res['menus'][1]['ingredients'],
             'steps2': res['menus'][1]['steps'],
+            'nutrients2': res['menus'][1]['nutrients'],
         }
         #
         return render(request, 'parameter.html', final_object)

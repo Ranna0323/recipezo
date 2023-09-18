@@ -2,81 +2,410 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>RecipeZo</title>
+    <!-- bootstrap core css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+
+    <!-- font awesome style -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!--    POST     -->
-<!--    <p>{{res}}</p>-->
-    <h3>recommended menu1</h3>
-    <p>{{menu1}}</p>
-    <h3>ingredients1</h3>
-    {% for ingre1 in ingredient1 %}
-        <p>{{ ingre1 }}</p>
-    {% endfor %}
-    <button id="open-modal">{{menu1}} 레시피 보기</button>
+    <div class="area">
+        <section>
+            <!-- header section strats -->
+            <header class="header_section">
+                <div class="container-fluid">
+                    <nav class="navbar navbar-expand-lg custom_nav-container">
+                        <div class="navbar-brand">
+                            <span>
+                            RecipeZo
+                            </span>
+                        </div>
+                        <div class="User_option">
+                            <a href="{% url 'post' %}">
+                                <span>Home</span>
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+            </header>
+            <!-- end header section -->
 
-    <h3>recommended menu2</h3>
-    <p>{{ menu2 }}</p>
-    <h3>ingredients2</h3>
-    {% for ingre2 in ingredient2 %}
-        <p>{{ ingre2 }}</p>
-    {% endfor %}
+            <!-- main section -->
+            <section class="main_section">
+                <div class="container">
+                    <div class="row">
+                        <!-- recommended menu 1 -->
+                        <div class="col-md-6">
+                            <div class="box">
+                                <div class="img-box">
+                                    <img src="{{image1}}" class="box-img" alt="">
+                                </div>
+                                <div class="detail-box">
+                                    <h4>{{menu1}}</h4>
+                                    <div class="container">
+                                        <div class="row justify-content-center">
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn modal_open" data-bs-toggle="modal" data-bs-target="#content1">
+                                              Details
+                                            </button>
+                                            <!-- Modal-->
+                                            <div id="content1" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" data-bs-keyboard="false" aria-hidden="true" class="modal fade text-left">
+                                                <div class="modal-dialog modal-xl" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title" id="modalHeader1">{{menu1}}</h4>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
 
-    <button id="open-modal2">{{menu2}} 레시피 보기</button>
-    <p><a href="{% url 'post' %}">post</a></p>
+                                                        <div class="modal-body p-0">
+                                                            <ul class="nav nav-tabs">
+                                                                <li class="nav-item active" id="tab1">
+                                                                    <h6 class="font-weight-bold" aria-current="page" href="#tab011">ingredients</h6>
+                                                                </li>
+                                                                <li class="nav-item" id="tab2">
+                                                                    <h6 class="text-muted">instructions</h6>
+                                                                </li>
+                                                                <li class="nav-item" id="tab3">
+                                                                    <h6 class="text-muted" href="#">nutrients</h6>
+                                                                </li>
+                                                            </ul>
+                                                            <!-- ingredients field -->
+                                                            <fieldset class="show" id="tab11">
+                                                                <div class="mt-4">
+                                                                    <ul>
+                                                                        {% for ingre1 in ingredient1 %}
+                                                                            <li>{{ ingre1 }}</li>
+                                                                        {% endfor %}
+                                                                    </ul>
+                                                                </div>
+                                                            </fieldset>
+                                                            <!-- instructions(recipe steps) field -->
+                                                            <fieldset id="tab21">
+                                                                <div class="mt-4">
+                                                                    <ol>
+                                                                        {% for step1 in steps1 %}
+                                                                            <li>{{ step1 }}</li>
+                                                                        {% endfor %}
+                                                                    </ol>
+                                                                </div>
+                                                            </fieldset>
+                                                            <!-- nutrients field -->
+                                                            <fieldset id="tab31">
+                                                                <div class="mt-4">
+                                                                    <ul>
+                                                                        {% for nutri1 in nutrients1 %}
+                                                                            <li>{{ nutri1 }}</li>
+                                                                        {% endfor %}
+                                                                    </ul>
+                                                                </div>
+                                                            </fieldset>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- recommended menu 2 -->
+                        <div class="col-md-6">
+                            <div class="box">
+                                <div class="img-box">
+                                    <img src="{{image2}}" class="box-img" alt="">
+                                </div>
+                                <div class="detail-box">
+                                    <h4>{{menu2}}</h4>
+                                    <div class="container">
+                                        <div class="row justify-content-center">
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn modal_open" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                              Details
+                                            </button>
+                                            <!-- Modal-->
+                                            <div id="staticBackdrop" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" data-bs-keyboard="false" aria-hidden="true" class="modal fade text-left">
+                                                <div class="modal-dialog modal-xl" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title" id="exampleModalLabel">{{menu2}}</h4>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
 
-
-    <div id="modal">
-        <div class="modal-content">
-            <h1>{{menu1}}</h1>
-            <h3>Recipe</h3>
-            {% for step1 in steps1 %}
-                <p>{{ step1 }}</p>
-            {% endfor %}
-            <button id="close-modal">닫기</button>
-        </div>
+                                                        <div class="modal-body p-0">
+                                                            <ul class="nav nav-tabs">
+                                                                <li class="nav-item active" id="tab01">
+                                                                    <h6 class="font-weight-bold" aria-current="page" href="#tab011">ingredients</h6>
+                                                                </li>
+                                                                <li class="nav-item" id="tab02">
+                                                                    <h6 class="text-muted">instructions</h6>
+                                                                </li>
+                                                                <li class="nav-item" id="tab03">
+                                                                    <h6 class="text-muted" href="#">nutrients</h6>
+                                                                </li>
+                                                            </ul>
+                                                            <!-- ingredients field -->
+                                                            <fieldset class="show" id="tab011">
+                                                                <div class="mt-4">
+                                                                    <ul>
+                                                                        {% for ingre2 in ingredient2 %}
+                                                                            <li>{{ ingre2 }}</li>
+                                                                        {% endfor %}
+                                                                    </ul>
+                                                                </div>
+                                                            </fieldset>
+                                                            <!-- instructions(recipe steps) field -->
+                                                            <fieldset id="tab021">
+                                                                <div class="mt-4">
+                                                                    <ol>
+                                                                        {% for step2 in steps2 %}
+                                                                            <li>{{ step2 }}</li>
+                                                                        {% endfor %}
+                                                                    </ol>
+                                                                </div>
+                                                            </fieldset>
+                                                            <!-- nutrients field -->
+                                                            <fieldset id="tab031">
+                                                                <div class="mt-4">
+                                                                    <ul>
+                                                                        {% for nutri2 in nutrients2 %}
+                                                                            <li>{{ nutri2 }}</li>
+                                                                        {% endfor %}
+                                                                    </ul>
+                                                                </div>
+                                                            </fieldset>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
     </div>
 
-    <div id="modal2">
-        <div class="modal-content">
-            <h1>{{menu2}}</h1>
-            <h3>Recipe</h3>
-            {% for step2 in steps2 %}
-                <p>{{ step2 }}</p>
-            {% endfor %}
-            <button id="close-modal2">닫기</button>
-        </div>
-    </div>
+
+
+
 </body>
 </html>
+<!-- jQery -->
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+<!-- bootstrap js -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
 <script>
-    const modal = document.getElementById("modal");
-    const modal2 = document.getElementById("modal2");
-    const openModalBtn = document.getElementById("open-modal");
-    const openModalBtn2 = document.getElementById("open-modal2");
-    const closeModalBtn = document.getElementById("close-modal");
-    const closeModalBtn2 = document.getElementById("close-modal2");
-    // 모달창 열기
-    openModalBtn.addEventListener("click", () => {
-        modal.style.display = "block";
-        document.body.style.overflow = "hidden"; // 스크롤바 제거
-    });// 모달창 열기
-    openModalBtn2.addEventListener("click", () => {
-        modal2.style.display = "block";
-        document.body.style.overflow = "hidden"; // 스크롤바 제거
-    });
-    // 모달창 닫기
-    closeModalBtn.addEventListener("click", () => {
-        modal.style.display = "none";
-        document.body.style.overflow = "auto"; // 스크롤바 보이기
-    });
-    closeModalBtn2.addEventListener("click", () => {
-        modal2.style.display = "none";
-        document.body.style.overflow = "auto"; // 스크롤바 보이기
+    $(document).ready(function(){
+        $(".nav-item").click(function(){
+            $(".nav-item").removeClass("active");
+            $(".nav-item h6").removeClass("font-weight-bold");
+            $(".nav-item h6").addClass("text-muted");
+            $(this).children("h6").removeClass("text-muted");
+            $(this).children("h6").addClass("font-weight-bold");
+            $(this).addClass("active");
+
+            current_fs = $(".active");
+
+            next_fs = $(this).attr('id');
+            next_fs = "#" + next_fs + "1";
+
+            $("fieldset").removeClass("show");
+            $(next_fs).addClass("show");
+
+            current_fs.animate({}, {
+                step: function() {
+                    current_fs.css({
+                        'display': 'none',
+                        'position': 'relative'
+                    });
+                    next_fs.css({
+                        'display': 'block'
+                    });
+                }
+            });
+        });
     });
 </script>
 <style>
+    fieldset {
+        display: none;
+    }
+
+    fieldset.show {
+        display: block;
+    }
+
+    select:focus, input:focus {
+        -moz-box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        /*border: 1px solid #2196F3 !important;*/
+        outline-width: 0 !important;
+        font-weight: 400;
+    }
+
+    button:focus {
+        -moz-box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        outline-width: 0;
+    }
+
+    .nav-item {
+        margin: 2px 5px 0px 5px;
+        padding-bottom: 10px;
+        cursor: pointer;
+    }
+
+    .nav-item:hover, .nav-item.active {
+        border-bottom: 1px solid #FF6136;
+    }
+
+    a:hover {
+        text-decoration: none;
+        color: #1565C0;
+    }
+
+    .box {
+        margin-bottom: 10px;
+        border-radius: 5px;
+        padding: 10px;
+    }
+
+    .line {
+        background-color: #CFD8DC;
+        height: 1px;
+        width: 100%;
+    }
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", sans-serif;
+        color: #0c0c0c;
+        overflow-x: hidden;
+        background-size: cover;
+    }
+
+    .area {
+        position: relative;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        background-size: cover;
+        background-position: center bottom;
+        background-repeat: no-repeat;
+        background: #ffeece;
+        height: 100vh;
+    }
+
+    .custom_nav-container {
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        padding: 0;
+    }
+
+    .navbar-brand span {
+        font-size: 28px;
+        font-weight: bold;
+        /* color: #ffffff; */
+    }
+
+    section {
+        position: relative;
+        width: 100%;
+    }
+    .User_option {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        margin-left: auto;
+        margin-right: 75px;
+    }
+
+    .User_option a {
+        color: #4C526C;
+        margin-left: 25px;
+        text-decoration-line: none;
+    }
+
+    .User_option a:hover {
+        color: #000000;
+    }
+
+    .User_option .form-inline {
+      position: relative;
+      margin-left: 25px;
+    }
+
+    .User_option .form-inline input {
+      display: none;
+    }
+
+    .User_option .form-inline button {
+      color: #ffffff;
+    }
+    .header_section {
+        padding: 15px 0;
+    }
+
+    .box-img {
+        width: 100%;
+    }
+
+    .main_section .box {
+      text-align: center;
+      margin-top: 45px;
+    }
+
+    .main_section .box .img-box img {
+      -webkit-filter: drop-shadow(0 2px 7px rgba(0, 0, 0, 0.3));
+              filter: drop-shadow(0 2px 7px rgba(0, 0, 0, 0.3));
+      border-radius: 45px;
+    }
+
+    .main_section .box .detail-box {
+      margin-top: 25px;
+    }
+
+    .main_section .box .detail-box h4 {
+      font-weight: bold;
+    }
+
+    .main_section .box .detail-box .modal_open {
+        display: inline-block;
+        /* width: 45px; */
+        height: 45px;
+        /* line-height: 45px; */
+        background-color: #FF6136;
+        border-radius: 10px;
+        /* font-size: 12px; */
+        color: #ffffff;
+        -webkit-transition: all 0.3s;
+        transition: all 0.3s;
+        border: 1px solid;
+    }
+
+    .main_section .box .detail-box button:hover {
+      background-color: transparent;
+        color: #FF6136;
+    }
     #modal {
         position: fixed;
         z-index: 1;
@@ -99,11 +428,88 @@
         background-color: rgba(0, 0, 0, 0.4);
         display: none;
     }
+
+    .modal-header{
+        border-bottom:none;
+    }
+
     .modal-content {
         background-color: #fefefe;
         margin: 15% auto;
         padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
+        height: 75vh;
+        overflow-y: auto;
+    }
+
+    .modal-body{
+        text-align: left;
+    }
+
+    .card {
+        background-color: #ffffff;
+        border: 1px solid rgba(0, 34, 51, 0.1);
+        box-shadow: 2px 4px 10px 0 rgba(0, 34, 51, 0.05), 2px 4px 10px 0 rgba(0, 34, 51, 0.05);
+        border-radius: 0.15rem;
+    }
+    .nav-tabs {
+        border-bottom: none;
+    }
+    .tab-card {
+      border:1px solid #eee;
+    }
+
+    .tab-card-header {
+      background:none;
+    }
+    /* Default mode */
+    .tab-card-header > .nav-tabs {
+      border: none;
+      margin: 0px;
+    }
+    .tab-card-header > .nav-tabs > li {
+      margin-right: 2px;
+    }
+    .tab-card-header > .nav-tabs > li > a {
+      border: 0;
+      border-bottom:2px solid transparent;
+      margin-right: 0;
+      color: #737373;
+      padding: 2px 15px;
+    }
+
+    .tab-card-header > .nav-tabs > li > a.show {
+        border-bottom:2px solid #007bff;
+        color: #007bff;
+    }
+    .tab-card-header > .nav-tabs > li > a:hover {
+        color: #007bff;
+    }
+
+    .tab-card > .tab-content {
+      padding-bottom: 0;
+    }
+    @media (max-width: 767px) {
+        .area{
+            height: 165vh;;
+        }
+        .User_option {
+            margin-right: 10px;
+        }
+    }
+    @media (max-width: 480px) {
+        .area{
+            height: 150vh;;
+        }
+    }
+
+    @media (max-width: 420px) {
+        .area{
+            height: 135vh;;
+        }
+    }
+    @media (max-width: 376px) {
+        .modal-content{
+            overflow-y: auto;
+        }
     }
 </style>
