@@ -8,8 +8,8 @@
 - LLM, Django 기술에 대한 이해를 하기 위해 스터디 목적으로 진행한 프로젝트
 
 ### Service Flow
-- 웹 페이지에서 사용자가 취향과 재료에 대한 정보를 입력하면 언어 모델이 해석하고, 응답 출력
-![Service Flow](https://github.com/Ranna0323/recipezo/assets/42730559/a3de8d17-9e6c-4685-a14a-eb7b9c52959e)
+- 웹 페이지에서 사용자가 취향과 재료에 대한 정보를 입력하면 언어 모델이 해석하고, 응답 출력<br/>
+<img width="1907" alt="Service Flow" src="https://github.com/Ranna0323/recipezo/assets/42730559/9d03e167-118c-48f8-bade-de8b0fa94b68">
 
 1. 레시피 데이터를 llama-index의 JSON Loader로 텍스트 추출
 2. 청크화(노드 구성)
@@ -43,13 +43,13 @@ You can recommend 2 menu.
 ```
 
 ### Service function
-메인페이지 - 음식취향 및 재료 입력
+메인페이지 - 음식취향 및 재료 입력<br/>
 ![mainpage](https://github.com/Ranna0323/recipezo/assets/42730559/4401fb75-fbec-4dad-90a1-8ac501e99cd2)
 
-세부페이지 - 메뉴 추천
+세부페이지 - 메뉴 추천<br/>
 ![세부페이지-메뉴](https://github.com/Ranna0323/recipezo/assets/42730559/0bcdd4ed-78cf-4ec3-91ed-9c07ee6e16fd)
 
-세부페이지 - 재료 및 레시피 보여주기
+세부페이지 - 재료 및 레시피 보여주기<br/>
 ![세부페이지-레시피](https://github.com/Ranna0323/recipezo/assets/42730559/7b61bd01-c5e8-4cfb-af39-a5d235f711d5)
 
 ### 아쉬운 점 및 추가하고 싶은 기능
