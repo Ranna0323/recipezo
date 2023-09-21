@@ -9,7 +9,7 @@
 
 ### Service Flow
 - 웹 페이지에서 사용자가 취향과 재료에 대한 정보를 입력하면 언어 모델이 해석하고, 응답 출력<br/>
-![serviceFlow](https://github.com/Ranna0323/readmeImages/ServiceFlow.png)
+![mainpage](https://github.com/Ranna0323/recipezo/readmeImages/ServiceFlow.png)
 
 1. 레시피 데이터를 llama-index의 JSON Loader로 텍스트 추출
 2. 청크화(노드 구성)
