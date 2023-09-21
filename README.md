@@ -43,13 +43,16 @@ You can recommend 2 menu.
 ```
 
 ### Service function
-메인페이지 - 음식취향 및 재료 입력<br/>
+메인페이지 - 음식취향 및 재료 입력  
+
 ![mainpage](https://github.com/Ranna0323/recipezo/assets/42730559/4401fb75-fbec-4dad-90a1-8ac501e99cd2)
 
-세부페이지 - 메뉴 추천<br/>
+세부페이지 - 메뉴 추천  
+
 ![세부페이지-메뉴](https://github.com/Ranna0323/recipezo/assets/42730559/0bcdd4ed-78cf-4ec3-91ed-9c07ee6e16fd)
 
-세부페이지 - 재료 및 레시피 보여주기<br/>
+세부페이지 - 재료 및 레시피 보여주기  
+
 ![세부페이지-레시피](https://github.com/Ranna0323/recipezo/assets/42730559/7b61bd01-c5e8-4cfb-af39-a5d235f711d5)
 
 ### 아쉬운 점 및 추가하고 싶은 기능
