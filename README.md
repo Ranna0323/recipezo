@@ -9,7 +9,7 @@
 
 ### Service Flow
 - 웹 페이지에서 사용자가 취향과 재료에 대한 정보를 입력하면 언어 모델이 해석하고, 응답 출력
-![이미지 설명]([이미지파일경로](https://photos.app.goo.gl/3ZgEHhH4v9FEHsG38).png "이미지이름") 
+![이미지 설명]([이미지파일경로]('https://photos.app.goo.gl/3ZgEHhH4v9FEHsG38').png "이미지이름") 
 1. 레시피 데이터를 llama-index의 JSON Loader로 텍스트 추출
 2. 청크화(노드 구성)
 3. Open AI API를 사용해서 임베딩하여 벡터화
