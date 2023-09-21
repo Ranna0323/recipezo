@@ -9,8 +9,7 @@
 
 ### Service Flow
 - 웹 페이지에서 사용자가 취향과 재료에 대한 정보를 입력하면 언어 모델이 해석하고, 응답 출력<br/>
-<img width="1907" alt="Service Flow" src="https://github.com/Ranna0323/recipezo/assets/42730559/9d03e167-118c-48f8-bade-de8b0fa94b68">
-![ServiceFlow]((https://photos.google.com/u/2/photo/AF1QipMik0AsIOCfPjI7HEU_JZz4Hw2VYKVZ6y-vr-HK))
+![serviceFlow](./readmeImages/ServiceFlow.png)
 
 1. 레시피 데이터를 llama-index의 JSON Loader로 텍스트 추출
 2. 청크화(노드 구성)
@@ -46,15 +45,15 @@ You can recommend 2 menu.
 ### Service function
 메인페이지 - 음식취향 및 재료 입력  
 
-![mainpage](https://github.com/Ranna0323/recipezo/assets/42730559/4401fb75-fbec-4dad-90a1-8ac501e99cd2)
+![mainpage](./readmeImages/mainpage.png)
 
 세부페이지 - 메뉴 추천  
 
-![세부페이지-메뉴](https://github.com/Ranna0323/recipezo/assets/42730559/0bcdd4ed-78cf-4ec3-91ed-9c07ee6e16fd)
+![세부페이지-메뉴](./readmeImages/세부페이지-메뉴.png)
 
 세부페이지 - 재료 및 레시피 보여주기  
 
-![세부페이지-레시피](https://github.com/Ranna0323/recipezo/assets/42730559/7b61bd01-c5e8-4cfb-af39-a5d235f711d5)
+![세부페이지-레시피](./readmeImages/세부페이지-레시피.png)
 
 ### 아쉬운 점 및 추가하고 싶은 기능
 현재 임베딩 되고 있는 영국 음식 데이터 외에 다른 나라 음식들에 대한 데이터가 너무 부족하다. 추후 데이터 업데이트 예정
