@@ -9,7 +9,8 @@
 
 ### Service Flow
 - 웹 페이지에서 사용자가 취향과 재료에 대한 정보를 입력하면 언어 모델이 해석하고, 응답 출력
-![이미지 설명]([이미지파일경로]('https://photos.app.goo.gl/3ZgEHhH4v9FEHsG38').png "이미지이름") 
+![Service Flow](https://github.com/Ranna0323/recipezo/assets/42730559/a3de8d17-9e6c-4685-a14a-eb7b9c52959e)
+
 1. 레시피 데이터를 llama-index의 JSON Loader로 텍스트 추출
 2. 청크화(노드 구성)
 3. Open AI API를 사용해서 임베딩하여 벡터화
@@ -43,14 +44,13 @@ You can recommend 2 menu.
 
 ### Service function
 메인페이지 - 음식취향 및 재료 입력
-![이미지 설명]([이미지파일경로]([https://photos.app.goo.gl/3ZgEHhH4v9FEHsG38](https://photos.app.goo.gl/WTrsPVQXubWbU5Jf7)).png "이미지이름") 
+![mainpage](https://github.com/Ranna0323/recipezo/assets/42730559/4401fb75-fbec-4dad-90a1-8ac501e99cd2)
 
 세부페이지 - 메뉴 추천
-![이미지 설명]([이미지파일경로]([https://photos.app.goo.gl/3ZgEHhH4v9FEHsG38](https://photos.app.goo.gl/XdDU24o2AxayVd9v5)).png "이미지이름") 
+![세부페이지-메뉴](https://github.com/Ranna0323/recipezo/assets/42730559/0bcdd4ed-78cf-4ec3-91ed-9c07ee6e16fd)
 
 세부페이지 - 재료 및 레시피 보여주기
-![이미지 설명]([이미지파일경로]([https://photos.app.goo.gl/3ZgEHhH4v9FEHsG38](https://photos.app.goo.gl/cwFLgLsdAdMtdicS8)).png "이미지이름") 
-
+![세부페이지-레시피](https://github.com/Ranna0323/recipezo/assets/42730559/7b61bd01-c5e8-4cfb-af39-a5d235f711d5)
 
 ### 아쉬운 점 및 추가하고 싶은 기능
 현재 임베딩 되고 있는 영국 음식 데이터 외에 다른 나라 음식들에 대한 데이터가 너무 부족하다. 추후 데이터 업데이트 예정
