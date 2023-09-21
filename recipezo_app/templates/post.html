@@ -37,9 +37,9 @@
                 <div class="container-fluid">
                     <nav class="navbar navbar-expand-lg custom_nav-container">
                         <div class="navbar-brand">
-                            <span>
+                            <a href="{% url 'post' %}">
                             RecipeZo
-                            </span>
+                            </a>
                         </div>
                     </nav>
                 </div>
@@ -328,6 +328,11 @@ a:focus {
     font-weight: bold;
     /*color: #ffffff;*/
 }
+.navbar-brand a {
+    font-size: 28px;
+    font-weight: bold;
+    color: #000000;
+}
 
 .User_option {
     display: -webkit-box;
@@ -450,7 +455,7 @@ a:focus {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding-top: 75px;
+  /*padding-top: 75px;*/
   padding-bottom: 425px;
   position: relative;
 }
@@ -550,7 +555,7 @@ a:focus {
   margin-top: 150px;
   position: absolute;
   z-index: 2;
-  bottom: 0;
+  bottom: 120px;
   width: 100%;
 }
 

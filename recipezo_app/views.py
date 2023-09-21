@@ -102,33 +102,33 @@ def get_post(request: requests.models.Response) -> str:
         Your response type as a JSON object with the following schema:
             {"menus :[{
                 {
-                  "number": "string",
-                  "image": "url",
-                  "name": "string",
-                  "description": "string",
-                  "category": "string",
-                  "rattings": "string",
-                  "ingredients": [
-                    "",
-                    "",
-                    ...
-                  ],
-                  "steps": [
-                    "",
-                    "",
-                    ...
-                  ],
-                  "nutrients": [
-                    "",
-                    "",
-                    ...
-                  ],
-                  "times": [
-                    {
-                      "Preparation": "string",
-                      "Cooking": "string"
-                    }
-                  ]
+                    "number": "string",
+                    "image": "url",
+                    "name": "string",
+                    "description": "string",
+                    "category": "string",
+                    "rattings": "string",
+                    "ingredients": [
+                        "",
+                        "",
+                        ...
+                    ],
+                    "steps": [
+                        "",
+                        "",
+                        ...
+                    ],
+                    "nutrients": [
+                        "",
+                        "",
+                        ...
+                    ],
+                    "times": [
+                        {
+                            "Preparation": "string",
+                            "Cooking": "string"
+                        }
+                    ]
                 }
             }]}
         You can recommend 2 menu.

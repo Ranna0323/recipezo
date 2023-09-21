@@ -20,9 +20,9 @@
                 <div class="container-fluid">
                     <nav class="navbar navbar-expand-lg custom_nav-container">
                         <div class="navbar-brand">
-                            <span>
+                            <a href="{% url 'post' %}">
                             RecipeZo
-                            </span>
+                            </a>
                         </div>
                         <div class="User_option">
                             <a href="{% url 'post' %}">
@@ -321,7 +321,14 @@
     .navbar-brand span {
         font-size: 28px;
         font-weight: bold;
-        /* color: #ffffff; */
+        /*color: #000000;*/
+    }
+
+    .navbar-brand a {
+        font-size: 28px;
+        font-weight: bold;
+        color: #000000;
+        text-decoration: none;
     }
 
     section {
@@ -375,9 +382,10 @@
     }
 
     .main_section .box .img-box img {
-      -webkit-filter: drop-shadow(0 2px 7px rgba(0, 0, 0, 0.3));
-              filter: drop-shadow(0 2px 7px rgba(0, 0, 0, 0.3));
-      border-radius: 45px;
+        height: 43vh;
+        -webkit-filter: drop-shadow(0 2px 7px rgba(0, 0, 0, 0.3));
+                filter: drop-shadow(0 2px 7px rgba(0, 0, 0, 0.3));
+        border-radius: 45px;
     }
 
     .main_section .box .detail-box {
