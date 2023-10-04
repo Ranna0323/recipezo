@@ -7,6 +7,17 @@
 - 프론트엔드와 백엔드를 모두 Django로 구현한 원시적인 형태의 웹 어플리케이션
 - LLM, Django 기술에 대한 이해를 하기 위해 스터디 목적으로 진행한 프로젝트
 
+### How to Use
+- pip를 사용하여 가상환경 virtualenv를 설치
+  - $ pip install --user virtualenv
+- 가상환경 실행
+  - windows : venv\Scripts\activate 
+  - macOS/Linux : source venv/bin/activate 
+- requirements.txt 다운로드 및 설치
+  - pip install -r requirements.txt
+- 프로그램 실행
+  - python manage.py runserver 
+
 ### Service Flow
 - 웹 페이지에서 사용자가 취향과 재료에 대한 정보를 입력하면 언어 모델이 해석하고, 응답 출력<br/>
 
