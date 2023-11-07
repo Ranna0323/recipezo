@@ -39,7 +39,7 @@
 - AI : Open AI, llama-index
 
 ### OpenAI Prompt
-- prompt 패턴 중 recipe 패턴 사용
+- 다양한 prompt 기법들을 알게 되었고, prompt 패턴 중 recipe 패턴 사용
 - 재료를 알고 있으며, 달성하기 위한 단계도 어느 정도 알고 있지만, 이를 모두 조합하는 데 도움이 필요할 때 유용
 
 ```javascript
